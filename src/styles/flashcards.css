@@ -1,7 +1,12 @@
 .flashcard-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content:space-around;
+}
+
+.flashcard {
+    height: 300px;
+    width: 300px;
 }
 
 .question {
@@ -31,7 +36,7 @@
     transform: rotateY(180deg);
 }
 
-.flashcard, .front, .back {
+.front, .back {
     border: 1px solid #ccc;
     border-radius: 5px;
 	height: 300px;
@@ -42,7 +47,6 @@
 .flipper {
 	transition: 0.6s;
 	transform-style: preserve-3d;
-
 	position: relative;
 }
 
