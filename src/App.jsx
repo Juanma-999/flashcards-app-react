@@ -1,9 +1,9 @@
-import Flashcard from './components/Flashcard';
+import CardGrid from './components/Card';
 
 function App() {
   return (
     <div className="App">
-      <Flashcard />
+      <CardGrid />
     </div>
   );
 }

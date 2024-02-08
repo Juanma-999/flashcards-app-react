@@ -1,72 +1,54 @@
-.flashcard-container {
+.card-grid {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 20px 20px 20px 45px;
+    padding: 30px;
+}
+
+.card {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
-    justify-content:space-around;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    width: 250px;
+    margin: 10px;
+    border: 1px solid grey;
+    border-radius: 0.35rem;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
+    position: relative;
+    transform: perspective(1000px) rotateY(var(--rotate-y, 0)) translateY(var(--translate-y, 0));
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    transition: 150ms;
 }
 
-.flashcard {
-    height: 300px;
-    width: 300px;
+.cardText {
+    padding: 15px;
 }
 
-.question {
-    font-weight: bold;
+.card:hover {
+    --translate-y: -2px;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.5);
+    opacity: 1;
 }
 
-.answers {
-    list-style-type: none;
-    padding: 0;
+.card.flip {
+    --rotate-y: 180deg;
 }
 
-.answer {
-    margin: 5px 0;
-    cursor: pointer;
+.card .front {
+    left: 0;
 }
 
-.answer:hover {
-    background-color: #f0f0f0;
-}
-
-.flashcard {
-	perspective: 1000px;
-}
-
-/* flip the pane when hovered */
-.flashcard:hover .flipper, .flashcard.hover .flipper {		
+.card .back {
     transform: rotateY(180deg);
 }
 
-.front, .back {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-	height: 300px;
-    width: 300px;
-}
-
-/* flip speed goes here */
-.flipper {
-	transition: 0.6s;
-	transform-style: preserve-3d;
-	position: relative;
-}
-
-/* hide back of pane during swap */
-.front, .back {
-	backface-visibility: hidden;
-
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
-/* front pane, placed above back */
-.front {
-	z-index: 2;
-	/* for firefox 31 */
-	transform: rotateY(0deg);
-}
-
-/* back, initially hidden pane */
-.back {
-	transform: rotateY(180deg);
+.card .front, .card .back {
+    position: absolute;
+    backface-visibility: hidden;
 }
