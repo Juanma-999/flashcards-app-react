@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import '../styles/flashcards.css';
+import '../styles/styles.css';
 
-export default function CardGrid() {
+export default function CardContainer() {
     const [cards, setCards] = useState([]);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export default function CardGrid() {
                         id: index,
                         question: result.question,
                         answers: answersMap,
-                        flip: false // Add flip state for each card
+                        flip: false
                     };
                 });
                 setCards(mappedCards);
@@ -38,26 +38,41 @@ export default function CardGrid() {
 
 function Card({ card }) {
     const [flip, setFlip] = useState(false);
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
 
     const handleFlip = () => {
         setFlip(!flip);
     };
 
+    const checkAnswer = (selectedAnswer) => {
+        const isCorrect = card.answers.get(selectedAnswer);
+        setSelectedAnswer(selectedAnswer);
+        if (isCorrect) {
+            console.log("Correct answer!");
+        } else {
+            console.log("Incorrect answer!");
+        }
+    }
+
+    function handleClick(selectedAnswer) {
+        checkAnswer(selectedAnswer);
+        handleFlip();
+    }
+
     return (
-        <div className={`card ${flip ? "flip" : ""}`} onClick={handleFlip}>
+        <div className={`card ${flip ? "flip" : ""}`}>
             <div className="front">
                 <div className="cardText">
                     <p className='question'>{card.question}</p>
                     <ul className='answers'>
                         {[...card.answers.keys()].map((answer, index) =>
-                            <li key={index} className='answer'>{answer}</li>
+                            <li key={index} className='answer' onClick={() => handleClick(answer)}>{answer}</li>
                         )}
                     </ul>
                 </div>
             </div>
-            <div className="back">
+            <div className="back" onClick={handleClick}>
                 <div className="cardText">
-                    <p className='question'>{card.question}</p>
                     <p>{[...card.answers.entries()].find(([answer, isCorrect]) => isCorrect)[0]}</p>
                 </div>
             </div>

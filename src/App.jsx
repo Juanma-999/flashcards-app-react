@@ -1,9 +1,9 @@
-import CardGrid from './components/Card';
+import CardContainer from './components/Card';
 
 function App() {
   return (
     <div className="App">
-      <CardGrid />
+      <CardContainer />
     </div>
   );
 }
