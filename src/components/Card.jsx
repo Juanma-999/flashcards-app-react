@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import '../styles/styles.css';
 
 export default function CardContainer() {
     const [cards, setCards] = useState([]);
 
     useEffect(() => {
+        fetchCards();
+    }, []); // Fetch cards on initial render
+
+    const fetchCards = () => {
         fetch('https://opentdb.com/api.php?amount=6&category=9&difficulty=medium')
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 const mappedCards = data.results.map((result, index) => {
                     const answersMap = new Map();
                     result.incorrect_answers.forEach(answer => answersMap.set(answer, false));
@@ -25,13 +29,23 @@ export default function CardContainer() {
             .catch((err) => {
                 console.log(err.message);
             });
-    }, []);
+    };
+
+    const handleNewQuestionsClick = () => {
+        setCards([]); // Clear existing cards
+        fetchCards(); // Fetch new cards
+    };
 
     return (
-        <div className='card-grid'>
-            {cards.map(card =>
-                <Card key={card.id} card={card}></Card>
-            )}
+        <div>
+            <div className='card-container'>
+                {cards.map(card =>
+                    <Card key={card.id} card={card}></Card>
+                )}
+            </div>
+            <div className="button-container">
+                <button className="newQuestionsButton" onClick={handleNewQuestionsClick}>Get New Questions</button>
+            </div>
         </div>
     );
 }
@@ -71,7 +85,7 @@ function Card({ card }) {
                     </ul>
                 </div>
             </div>
-            <div className="back" onClick={handleClick}>
+            <div className="back" onClick={handleFlip}>
                 <div className="cardText">
                     <p>{[...card.answers.entries()].find(([answer, isCorrect]) => isCorrect)[0]}</p>
                 </div>
@@ -79,4 +93,14 @@ function Card({ card }) {
         </div>
     );
 }
+
+Card.propTypes = {
+    card: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        question: PropTypes.string.isRequired,
+        answers: PropTypes.instanceOf(Map).isRequired,
+        flip: PropTypes.bool.isRequired
+    }).isRequired
+};
+
 

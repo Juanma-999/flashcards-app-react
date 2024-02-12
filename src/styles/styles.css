@@ -1,10 +1,8 @@
-.card-grid {
-    display: grid;
-    align-items: center;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-    margin: 20px 20px 20px 45px;
-    padding: 30px;
+.card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .card {
@@ -25,6 +23,26 @@
     perspective: 1000px;
     transform-style: preserve-3d;
     transition: 150ms;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    margin-top: 50px;
+}
+
+.newQuestionsButton {
+    width: 300px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    outline: none;
 }
 
 .cardText {
